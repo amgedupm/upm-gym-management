@@ -47,20 +47,19 @@ The UPM Gym Management System is a desktop application that digitalizes and auto
 
 The system follows a 3-Layer MVC Architecture:
 
-src/main/java/com/upm/gym/
-├── model/          # Entity classes (User, Membership, Booking, etc.)
-├── dao/            # Data Access Objects (DB queries)
-├── service/        # Business logic layer
-├── controller/     # JavaFX controllers (FXML)
-├── view/           # FXML UI files
-└── util/           # Helper utilities
+- Model Layer          # Entity classes (User, Membership, Booking, etc.)
+- DAO Layer            # Data Access Objects (DB queries)
+- Service Layer        # Business logic layer
+- Controller Layer     # JavaFX controllers (FXML)
+- View Layer           # FXML UI files
+- Util Layer           # Helper utilities
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-- Java 17 or higher
+- Java 25
 - MySQL 8.0+
 - Maven 3.8+
 - JavaFX SDK
