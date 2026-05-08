@@ -34,12 +34,12 @@ The UPM Gym Management System is a desktop application that digitalizes and auto
 
 | Component | Technology |
 |-----------|-----------|
-| Language | Java 17+ |
+| Language | Java 25 |
 | GUI Framework | JavaFX |
 | Database | MySQL |
 | DB Access | JDBC |
 | Build Tool | Maven |
-| Testing | JUnit 5 |
+| Testing | JUnit 6 |
 
 ---
 
