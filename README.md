@@ -24,7 +24,7 @@ The UPM Gym Management System is a desktop application that digitalizes and auto
 |------|-----------|
 | Mohsen Al Masud | 4410097 |
 | Amged Elhag | 4411651 |
-| Ahmed Hakimi | — |
+| Ahmed Hakimi | 4320010 |
 
 **Instructor:** Dr. Osama Qaeed
 
