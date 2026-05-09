@@ -63,8 +63,20 @@ public class MemberDashboardController {
     }
 
     @FXML
-    private void handleMyBookings() {
-        System.out.println("TODO: open My Bookings screen");
+    private void handleMyBookings(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MyBookings.fxml"));
+            Parent root = loader.load();
+
+            MyBookingsController controller = loader.getController();
+            controller.setUser(loggedInUser);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - My Bookings");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
