@@ -3,7 +3,7 @@ SE 324 – Software Construction | Spring 2026
 University of Prince Mugrin (UPM) Madinah, Saudi Arabia
 
 ---
-
+ 
 ## Project Overview
 
 The UPM Gym Management System is a desktop application that digitalizes and automates the management of gym memberships and sports facility bookings at the University of Prince Mugrin. It replaces the current manual, WhatsApp-based process with a structured, role-based digital platform.
