@@ -42,6 +42,7 @@ public class MembershipService {
      * Real version will insert into the database via MembershipDAO.saveMembership().
      */
     public void register(Membership membership) {
+        // Pretend the registration succeeded. No DB call yet.
         System.out.println("[STUB] Registered membership: " +
                 membership.getMembershipType() +
                 " for user " + membership.getUserId() +
