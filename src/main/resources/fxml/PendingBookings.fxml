@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.upm.gym.controller.PendingBookingsController"
+            prefWidth="850"
+            prefHeight="550">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #1e3a5f;">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+            <Label text="Pending Booking Requests"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30"/>
+            </padding>
+
+            <Label text="Review and decide on each request below."
+                   style="-fx-font-size: 14px;"/>
+
+            <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="70"/>
+                    <TableColumn fx:id="requesterColumn" text="Requester ID" prefWidth="140"/>
+                    <TableColumn fx:id="facilityColumn" text="Facility" prefWidth="170"/>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="120"/>
+                    <TableColumn fx:id="timeColumn" text="Time Slot" prefWidth="160"/>
+                </columns>
+                <placeholder>
+                    <Label text="No pending requests."/>
+                </placeholder>
+            </TableView>
+
+            <Label fx:id="messageLabel"
+                   style="-fx-font-size: 13px;"/>
+
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Button fx:id="approveButton"
+                        text="Approve"
+                        onAction="#handleApprove"
+                        prefWidth="160"
+                        prefHeight="38"
+                        disable="true"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+                <Button fx:id="rejectButton"
+                        text="Reject"
+                        onAction="#handleReject"
+                        prefWidth="160"
+                        prefHeight="38"
+                        disable="true"
+                        style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+            <Button text="Back to Dashboard"
+                    onAction="#handleBack"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
