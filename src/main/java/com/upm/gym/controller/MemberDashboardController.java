@@ -29,8 +29,20 @@ public class MemberDashboardController {
     }
 
     @FXML
-    private void handleMyMembership() {
-        System.out.println("TODO: open My Membership screen");
+    private void handleMyMembership(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MyMembership.fxml"));
+            Parent root = loader.load();
+
+            MyMembershipController controller = loader.getController();
+            controller.setUser(loggedInUser);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - My Membership");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
