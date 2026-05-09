@@ -134,4 +134,10 @@ public class MyMembershipController {
             controller.setUser(loggedInUser);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Sce
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Member Dashboard");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

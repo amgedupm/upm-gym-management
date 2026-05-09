@@ -8,13 +8,11 @@ import java.time.LocalDate;
  * STUB IMPLEMENTATION — frontend placeholder.
  * The real implementation will be added by the backend lead.
  * Once the real version exists, delete this file or replace its body
- * with calls to the actual DAO layer.
  */
 public class MembershipService {
 
     /**
      * Calculates the price (in SAR) for a given plan type.
-     * Placeholder values; the backend may load these from the database.
      */
     public double getPriceForPlan(String planType) {
         return switch (planType) {
@@ -42,7 +40,6 @@ public class MembershipService {
      * Real version will insert into the database via MembershipDAO.saveMembership().
      */
     public void register(Membership membership) {
-        // Pretend the registration succeeded. No DB call yet.
         System.out.println("[STUB] Registered membership: " +
                 membership.getMembershipType() +
                 " for user " + membership.getUserId() +
@@ -55,8 +52,6 @@ public class MembershipService {
      * Real version will query MembershipDAO.getActiveMembershipByUserId(userId).
      */
     public Membership getActiveMembership(String userId) {
-        // Returns a fake "active" membership so the UI has something to display.
-        // Return null instead if you want to test the "no active membership" state.
         Membership fake = new Membership();
         fake.setMembershipId(1);
         fake.setUserId(userId);
