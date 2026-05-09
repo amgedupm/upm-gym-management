@@ -23,27 +23,47 @@ public class LoginController {
     private final AuthService authService = new AuthService();
 
     @FXML
-    private void handleLogin() {
+    private void handleLogin(javafx.event.ActionEvent event) {
         String userId = userIdField.getText().trim();
         String password = passwordField.getText();
 
         if (userId.isEmpty() || password.isEmpty()) {
+            messageLabel.setStyle("-fx-text-fill: red;");
             messageLabel.setText("Please enter both User ID and password.");
             return;
         }
 
-        User user = authService.login(userId, password);
+        try {
+            User user = authService.login(userId, password);
 
-        if (user == null) {
-            messageLabel.setText("Invalid credentials. Please try again.");
-            passwordField.clear();
-            return;
+            if (user == null) {
+                messageLabel.setStyle("-fx-text-fill: red;");
+                messageLabel.setText("Invalid credentials. Please try again.");
+                passwordField.clear();
+                return;
+            }
+
+            // Login succeeded — open the appropriate dashboard
+            openMemberDashboard(event, user);
+
+        } catch (Exception e) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Database error. Please try again later.");
+            e.printStackTrace();
         }
+    }
 
-        messageLabel.setStyle("-fx-text-fill: green;");
-        messageLabel.setText("Welcome, " + user.getFullName() + "! Role: " + user.getRole());
+    private void openMemberDashboard(javafx.event.ActionEvent event, User user) throws Exception {
+        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                getClass().getResource("/fxml/MemberDashboard.fxml"));
+        javafx.scene.Parent root = loader.load();
 
-        // TODO: navigate to the correct dashboard based on role
-        // We'll add this once the dashboards exist.
+        MemberDashboardController dashboardController = loader.getController();
+        dashboardController.setUser(user);
+
+        javafx.stage.Stage stage = (javafx.stage.Stage)
+                ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.setTitle("UPM Gym - Member Dashboard");
     }
 }
