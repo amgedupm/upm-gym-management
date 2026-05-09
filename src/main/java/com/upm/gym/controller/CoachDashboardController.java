@@ -24,8 +24,20 @@ public class CoachDashboardController {
     }
 
     @FXML
-    private void handlePendingBookings() {
-        System.out.println("TODO: open Pending Booking Requests screen");
+    private void handlePendingBookings(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PendingBookings.fxml"));
+            Parent root = loader.load();
+
+            PendingBookingsController controller = loader.getController();
+            controller.setUser(loggedInUser);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Pending Bookings");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
