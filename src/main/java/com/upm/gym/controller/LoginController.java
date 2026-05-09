@@ -44,7 +44,7 @@ public class LoginController {
             }
 
             // Login succeeded — open the appropriate dashboard
-            openMemberDashboard(event, user);
+            routeToDashboard(event, user);
 
         } catch (Exception e) {
             messageLabel.setStyle("-fx-text-fill: red;");
@@ -53,17 +53,46 @@ public class LoginController {
         }
     }
 
-    private void openMemberDashboard(javafx.event.ActionEvent event, User user) throws Exception {
-        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
-                getClass().getResource("/fxml/MemberDashboard.fxml"));
+    private void routeToDashboard(javafx.event.ActionEvent event, User user) throws Exception {
+        String fxmlPath;
+        String windowTitle;
+
+        switch (user.getRole()) {
+            case STUDENT, FACULTY -> {
+                fxmlPath = "/fxml/MemberDashboard.fxml";
+                windowTitle = "UPM Gym - Member Dashboard";
+            }
+            case COACH, STAFF -> {
+                fxmlPath = "/fxml/CoachDashboard.fxml";
+                windowTitle = "UPM Gym - Coach Dashboard";
+            }
+            case SECURITY -> {
+                // TODO: replace with SecuritySearch.fxml when that screen exists
+                messageLabel.setStyle("-fx-text-fill: orange;");
+                messageLabel.setText("Security login successful. Security screen coming soon.");
+                return;
+            }
+            default -> {
+                messageLabel.setStyle("-fx-text-fill: red;");
+                messageLabel.setText("Unknown role. Contact admin.");
+                return;
+            }
+        }
+
+        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource(fxmlPath));
         javafx.scene.Parent root = loader.load();
 
-        MemberDashboardController dashboardController = loader.getController();
-        dashboardController.setUser(user);
+        // Pass the user object to whichever controller was loaded
+        Object controller = loader.getController();
+        if (controller instanceof MemberDashboardController memberController) {
+            memberController.setUser(user);
+        } else if (controller instanceof CoachDashboardController coachController) {
+            coachController.setUser(user);
+        }
 
         javafx.stage.Stage stage = (javafx.stage.Stage)
                 ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(new javafx.scene.Scene(root));
-        stage.setTitle("UPM Gym - Member Dashboard");
+        stage.setTitle(windowTitle);
     }
 }
