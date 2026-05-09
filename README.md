@@ -1,6 +1,6 @@
 # University Gym Management System
 SE 324 – Software Construction | Spring 2026
-University of Prince Mugrin (UPM) — Madinah, Saudi Arabia
+University of Prince Mugrin (UPM) Madinah, Saudi Arabia
 
 ---
 
