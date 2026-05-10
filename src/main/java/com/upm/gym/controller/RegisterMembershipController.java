@@ -101,21 +101,23 @@ public class RegisterMembershipController {
             membership.setExpiryDate(membershipService.calculateExpiryDate(plan, startDate));
             membership.setAutoRenew(false);
 
-            membershipService.register(membership);
+            double amount = membershipService.getPriceForPlan(plan);
 
-            messageLabel.setStyle("-fx-text-fill: green;");
-            messageLabel.setText("Membership registered successfully! Redirecting...");
+            // Navigate to Payment screen with the prepared membership
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Payment.fxml"));
+            Parent root = loader.load();
 
-            // TODO: navigate to Payment screen once that exists.
-            // For now, return to the Member Dashboard after a short delay.
-            javafx.animation.PauseTransition pause =
-                    new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
-            pause.setOnFinished(e -> goBackToDashboard(event));
-            pause.play();
+            PaymentController paymentController = loader.getController();
+            paymentController.setUser(loggedInUser);
+            paymentController.setMembershipDetails(membership, amount);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Payment");
 
         } catch (Exception e) {
             messageLabel.setStyle("-fx-text-fill: red;");
-            messageLabel.setText("Registration failed. Please try again.");
+            messageLabel.setText("Could not proceed to payment. Please try again.");
             e.printStackTrace();
         }
     }
