@@ -175,4 +175,31 @@ public class BookingService {
         }
         return filtered;
     }
+    /**
+     * STUB — count of all bookings for today.
+     * Real version: SELECT COUNT(*) FROM bookings WHERE booking_date = CURDATE().
+     */
+    public int countBookingsToday() {
+        return 7;
+    }
+
+    /**
+     * STUB — count of pending booking requests.
+     * Real version: SELECT COUNT(*) FROM bookings WHERE status = 'PENDING'.
+     */
+    public int countPendingBookings() {
+        return getPendingBookings().size();
+    }
+
+    /**
+     * STUB — count of bookings per facility for the current month.
+     * Real version: SELECT facility_name, COUNT(*) FROM bookings
+     * WHERE MONTH(booking_date) = MONTH(CURDATE()) GROUP BY facility_name.
+     */
+    public java.util.Map<String, Integer> countBookingsByFacilityThisMonth() {
+        java.util.Map<String, Integer> map = new java.util.LinkedHashMap<>();
+        map.put("Football Field", 14);
+        map.put("Basketball Court", 9);
+        return map;
+    }
 }

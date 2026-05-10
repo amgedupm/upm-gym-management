@@ -75,8 +75,20 @@ public class CoachDashboardController {
     }
 
     @FXML
-    private void handleReports() {
-        System.out.println("TODO: open Reports screen");
+    private void handleReports(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Reports.fxml"));
+            Parent root = loader.load();
+
+            ReportsController controller = loader.getController();
+            controller.setUser(loggedInUser);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Reports");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
