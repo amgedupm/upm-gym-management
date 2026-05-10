@@ -67,10 +67,8 @@ public class LoginController {
                 windowTitle = "UPM Gym - Coach Dashboard";
             }
             case SECURITY -> {
-                // TODO: replace with SecuritySearch.fxml when that screen exists
-                messageLabel.setStyle("-fx-text-fill: orange;");
-                messageLabel.setText("Security login successful. Security screen coming soon.");
-                return;
+                fxmlPath = "/fxml/SecuritySearch.fxml";
+                windowTitle = "UPM Gym - Security Verification";
             }
             default -> {
                 messageLabel.setStyle("-fx-text-fill: red;");
@@ -88,6 +86,8 @@ public class LoginController {
             memberController.setUser(user);
         } else if (controller instanceof CoachDashboardController coachController) {
             coachController.setUser(user);
+        } else if (controller instanceof SecuritySearchController securityController) {
+            securityController.setUser(user);
         }
 
         javafx.stage.Stage stage = (javafx.stage.Stage)
