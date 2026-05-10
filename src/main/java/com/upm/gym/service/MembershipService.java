@@ -70,4 +70,19 @@ public class MembershipService {
         System.out.println("[STUB] Cancelled membership #" + membershipId);
         return true;
     }
+    /**
+     * STUB — count of active memberships.
+     * Real version: SELECT COUNT(*) FROM memberships WHERE expiry_date >= CURDATE() AND status = 'ACTIVE'.
+     */
+    public int countActiveMemberships() {
+        return 23;
+    }
+
+    /**
+     * STUB — count of all members ever registered.
+     * Real version: SELECT COUNT(*) FROM users WHERE role IN ('STUDENT', 'FACULTY').
+     */
+    public int countTotalMembers() {
+        return 31;
+    }
 }
