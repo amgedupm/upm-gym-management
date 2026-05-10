@@ -58,8 +58,20 @@ public class MemberDashboardController {
     }
 
     @FXML
-    private void handleBookField() {
-        System.out.println("TODO: open Book Field screen");
+    private void handleBookField(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewBooking.fxml"));
+            Parent root = loader.load();
+
+            NewBookingController controller = loader.getController();
+            controller.setUser(loggedInUser);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Book a Field");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
