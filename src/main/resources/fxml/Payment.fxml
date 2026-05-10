@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.upm.gym.controller.PaymentController"
+            prefWidth="650"
+            prefHeight="600">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2c3e50;">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+            <Label text="Payment"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="18">
+            <padding>
+                <Insets top="25" right="50" bottom="25" left="50"/>
+            </padding>
+
+            <VBox alignment="CENTER" spacing="6"
+                  style="-fx-background-color: #ecf0f1; -fx-background-radius: 8; -fx-padding: 15;"
+                  prefWidth="500">
+                <Label text="ORDER SUMMARY"
+                       style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #555;"/>
+                <Label fx:id="planLabel" text="—"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Label fx:id="amountLabel" text="—"
+                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+            </VBox>
+
+            <Label text="Card Details"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="15" vgap="14">
+
+                <Label text="Card Holder:"
+                       style="-fx-font-weight: bold;"
+                       GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="holderField"
+                           promptText="Name on card"
+                           prefWidth="320"
+                           GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Card Number:"
+                       style="-fx-font-weight: bold;"
+                       GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="cardNumberField"
+                           promptText="16 digits, no spaces"
+                           prefWidth="320"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Expiry (MM/YY):"
+                       style="-fx-font-weight: bold;"
+                       GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="expiryField"
+                           promptText="e.g. 09/27"
+                           prefWidth="120"
+                           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="CVV:"
+                       style="-fx-font-weight: bold;"
+                       GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="cvvField"
+                           promptText="3 digits"
+                           prefWidth="120"
+                           GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            </GridPane>
+
+            <Label fx:id="messageLabel"
+                   style="-fx-font-size: 13px;"/>
+
+            <Button text="Pay Now"
+                    onAction="#handlePay"
+                    prefWidth="320"
+                    prefHeight="42"
+                    defaultButton="true"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+            <Button text="Cancel"
+                    onAction="#handleCancel"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

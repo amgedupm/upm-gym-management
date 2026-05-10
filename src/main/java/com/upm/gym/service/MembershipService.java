@@ -105,4 +105,13 @@ public class MembershipService {
         return membershipDAO
                 .countTotalMembers();
     }
+    /**
+     * STUB — pretends to process a payment.
+     * Real version will integrate with payment processor (or mark as paid in DB).
+     */
+    public boolean processPayment(String userId, double amount, String last4) {
+        System.out.println("[STUB] Payment processed: user=" + userId +
+                ", amount=SAR " + amount + ", card ending in " + last4);
+        return true;
+    }
 }
