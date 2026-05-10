@@ -60,15 +60,15 @@ public class MemberDashboardController {
     @FXML
     private void handleBookField(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NewBooking.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BookingCalendar.fxml"));
             Parent root = loader.load();
 
-            NewBookingController controller = loader.getController();
+            BookingCalendarController controller = loader.getController();
             controller.setUser(loggedInUser);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("UPM Gym - Book a Field");
+            stage.setTitle("UPM Gym - Booking Calendar");
         } catch (Exception e) {
             e.printStackTrace();
         }

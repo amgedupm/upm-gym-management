@@ -150,4 +150,29 @@ public class BookingService {
         return bookingDAO
                 .countBookingsByFacilityThisMonth();
     }
+
+    /**
+     * STUB — returns all bookings (any status) for a facility between two dates.
+     * Real version: SELECT * FROM bookings WHERE facility_name = ?
+     *               AND booking_date BETWEEN ? AND ?
+     */
+    public java.util.List<com.upm.gym.model.Booking> getBookingsForFacilityInRange(
+            String facilityName, java.time.LocalDate from, java.time.LocalDate to) {
+
+        java.util.List<com.upm.gym.model.Booking> all = new java.util.ArrayList<>();
+
+        // Reuse existing stubs and filter
+        all.addAll(getApprovedBookingsForToday());
+        all.addAll(getPendingBookings());
+
+        java.util.List<com.upm.gym.model.Booking> filtered = new java.util.ArrayList<>();
+        for (com.upm.gym.model.Booking b : all) {
+            if (b.getFacilityName().equals(facilityName)
+                    && !b.getBookingDate().isBefore(from)
+                    && !b.getBookingDate().isAfter(to)) {
+                filtered.add(b);
+            }
+        }
+        return filtered;
+    }
 }
