@@ -6,9 +6,8 @@ import com.upm.gym.exception.BookingException;
 import com.upm.gym.model.Booking;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BookingService {
 
@@ -18,188 +17,137 @@ public class BookingService {
         bookingDAO = new BookingDAO();
     }
 
-    public void submitBooking(Booking booking) throws BookingException {
-        if (booking.getStartTime().isAfter(booking.getEndTime())) {
-            throw new BookingException("Invalid booking time.");
+    /**
+     * Submit a new booking request.
+     */
+    public void submitBooking(
+            Booking booking)
+            throws BookingException {
+
+        if (booking.getStartTime()
+                .isAfter(
+                        booking.getEndTime())) {
+
+            throw new BookingException(
+                    "Invalid booking time."
+            );
         }
-        bookingDAO.createBooking(booking);
-    }
 
-    public void approveBooking(int bookingId) {
-        bookingDAO.updateBookingStatus(bookingId, BookingStatus.APPROVED);
-    }
-
-    public void rejectBooking(int bookingId) {
-        bookingDAO.updateBookingStatus(bookingId, BookingStatus.REJECTED);
+        bookingDAO.createBooking(
+                booking
+        );
     }
 
     /**
-     * STUB — returns hardcoded sample bookings for the given user.
-     * Real version will query BookingDAO.getBookingsByUser(userId).
+     * Approve a booking request.
      */
-    public List<Booking> getBookingsByUser(String userId) {
-        List<Booking> fake = new ArrayList<>();
+    public void approveBooking(
+            int bookingId) {
 
-        Booking b1 = new Booking();
-        b1.setBookingId(101);
-        b1.setUserId(userId);
-        b1.setFacilityName("Football Field");
-        b1.setBookingDate(LocalDate.now().plusDays(2));
-        b1.setStartTime(LocalTime.of(18, 0));
-        b1.setEndTime(LocalTime.of(19, 0));
-        b1.setStatus(BookingStatus.APPROVED);
-
-        Booking b2 = new Booking();
-        b2.setBookingId(102);
-        b2.setUserId(userId);
-        b2.setFacilityName("Basketball Court");
-        b2.setBookingDate(LocalDate.now().plusDays(5));
-        b2.setStartTime(LocalTime.of(20, 0));
-        b2.setEndTime(LocalTime.of(21, 30));
-        b2.setStatus(BookingStatus.PENDING);
-
-        Booking b3 = new Booking();
-        b3.setBookingId(103);
-        b3.setUserId(userId);
-        b3.setFacilityName("Football Field");
-        b3.setBookingDate(LocalDate.now().minusDays(3));
-        b3.setStartTime(LocalTime.of(17, 0));
-        b3.setEndTime(LocalTime.of(18, 0));
-        b3.setStatus(BookingStatus.REJECTED);
-
-        fake.add(b1);
-        fake.add(b2);
-        fake.add(b3);
-        return fake;
+        bookingDAO.updateBookingStatus(
+                bookingId,
+                BookingStatus.APPROVED
+        );
     }
 
     /**
-     * STUB — pretends to cancel a booking.
-     * Real version will UPDATE the bookings row, setting status to CANCELLED.
+     * Reject a booking request.
      */
-    public boolean cancelBooking(int bookingId) {
-        System.out.println("[STUB] Cancelled booking #" + bookingId);
-        return true;
+    public void rejectBooking(
+            int bookingId) {
+
+        bookingDAO.updateBookingStatus(
+                bookingId,
+                BookingStatus.REJECTED
+        );
     }
 
     /**
-     * STUB — returns hardcoded sample pending bookings.
-     * Real version will query BookingDAO.getPendingBookings().
+     * Retrieve all bookings for a user.
+     */
+    public List<Booking> getBookingsByUser(
+            String userId) {
+
+        return bookingDAO
+                .getBookingsByUser(
+                        userId
+                );
+    }
+
+    /**
+     * Cancel a booking.
+     */
+    public boolean cancelBooking(
+            int bookingId) {
+
+        return bookingDAO
+                .cancelBooking(
+                        bookingId
+                );
+    }
+
+    /**
+     * Retrieve all pending bookings.
      */
     public List<Booking> getPendingBookings() {
-        List<Booking> fake = new ArrayList<>();
 
-        Booking b1 = new Booking();
-        b1.setBookingId(201);
-        b1.setUserId("4410097");
-        b1.setFacilityName("Football Field");
-        b1.setBookingDate(LocalDate.now().plusDays(3));
-        b1.setStartTime(LocalTime.of(17, 0));
-        b1.setEndTime(LocalTime.of(18, 0));
-        b1.setStatus(BookingStatus.PENDING);
-
-        Booking b2 = new Booking();
-        b2.setBookingId(202);
-        b2.setUserId("4413828");
-        b2.setFacilityName("Basketball Court");
-        b2.setBookingDate(LocalDate.now().plusDays(4));
-        b2.setStartTime(LocalTime.of(20, 0));
-        b2.setEndTime(LocalTime.of(21, 30));
-        b2.setStatus(BookingStatus.PENDING);
-
-        Booking b3 = new Booking();
-        b3.setBookingId(203);
-        b3.setUserId("4510353");
-        b3.setFacilityName("Football Field");
-        b3.setBookingDate(LocalDate.now().plusDays(7));
-        b3.setStartTime(LocalTime.of(19, 0));
-        b3.setEndTime(LocalTime.of(20, 0));
-        b3.setStatus(BookingStatus.PENDING);
-
-        fake.add(b1);
-        fake.add(b2);
-        fake.add(b3);
-        return fake;
+        return bookingDAO
+                .getPendingBookings();
     }
 
     /**
-     * STUB — returns hardcoded sample approved bookings for today.
-     * Real version will query BookingDAO.getApprovedBookingsByDate(LocalDate.now()).
+     * Retrieve today's approved bookings.
      */
-    public List<Booking> getApprovedBookingsForToday() {
-        List<Booking> fake = new ArrayList<>();
+    public List<Booking>
+    getApprovedBookingsForToday() {
 
-        Booking b1 = new Booking();
-        b1.setBookingId(301);
-        b1.setUserId("4410097");
-        b1.setFacilityName("Football Field");
-        b1.setBookingDate(LocalDate.now());
-        b1.setStartTime(LocalTime.of(16, 0));
-        b1.setEndTime(LocalTime.of(17, 0));
-        b1.setStatus(BookingStatus.APPROVED);
-
-        Booking b2 = new Booking();
-        b2.setBookingId(302);
-        b2.setUserId("4413828");
-        b2.setFacilityName("Basketball Court");
-        b2.setBookingDate(LocalDate.now());
-        b2.setStartTime(LocalTime.of(18, 0));
-        b2.setEndTime(LocalTime.of(19, 30));
-        b2.setStatus(BookingStatus.APPROVED);
-
-        Booking b3 = new Booking();
-        b3.setBookingId(303);
-        b3.setUserId("4510353");
-        b3.setFacilityName("Football Field");
-        b3.setBookingDate(LocalDate.now());
-        b3.setStartTime(LocalTime.of(20, 0));
-        b3.setEndTime(LocalTime.of(21, 0));
-        b3.setStatus(BookingStatus.APPROVED);
-
-        fake.add(b1);
-        fake.add(b2);
-        fake.add(b3);
-        return fake;
+        return bookingDAO
+                .getApprovedBookingsByDate(
+                        LocalDate.now()
+                );
     }
+
     /**
-     * STUB — returns this user's approved bookings for today.
-     * Real version will query BookingDAO.getApprovedBookingsByUserAndDate(userId, LocalDate.now()).
+     * Retrieve today's approved bookings
+     * for a specific user.
      */
-    public java.util.List<com.upm.gym.model.Booking> getApprovedBookingsForUserToday(String userId) {
-        java.util.List<com.upm.gym.model.Booking> all = getApprovedBookingsForToday();
-        java.util.List<com.upm.gym.model.Booking> filtered = new java.util.ArrayList<>();
-        for (com.upm.gym.model.Booking b : all) {
-            if (b.getUserId().equals(userId)) {
-                filtered.add(b);
-            }
-        }
-        return filtered;
+    public List<Booking>
+    getApprovedBookingsForUserToday(
+            String userId) {
+
+        return bookingDAO
+                .getApprovedBookingsByUserAndDate(
+                        userId,
+                        LocalDate.now()
+                );
     }
+
     /**
-     * STUB — count of all bookings for today.
-     * Real version: SELECT COUNT(*) FROM bookings WHERE booking_date = CURDATE().
+     * Count all bookings for today.
      */
     public int countBookingsToday() {
-        return 7;
+
+        return bookingDAO
+                .countBookingsToday();
     }
 
     /**
-     * STUB — count of pending booking requests.
-     * Real version: SELECT COUNT(*) FROM bookings WHERE status = 'PENDING'.
+     * Count pending booking requests.
      */
     public int countPendingBookings() {
-        return getPendingBookings().size();
+
+        return bookingDAO
+                .countPendingBookings();
     }
 
     /**
-     * STUB — count of bookings per facility for the current month.
-     * Real version: SELECT facility_name, COUNT(*) FROM bookings
-     * WHERE MONTH(booking_date) = MONTH(CURDATE()) GROUP BY facility_name.
+     * Count bookings grouped by facility
+     * for the current month.
      */
-    public java.util.Map<String, Integer> countBookingsByFacilityThisMonth() {
-        java.util.Map<String, Integer> map = new java.util.LinkedHashMap<>();
-        map.put("Football Field", 14);
-        map.put("Basketball Court", 9);
-        return map;
+    public Map<String, Integer>
+    countBookingsByFacilityThisMonth() {
+
+        return bookingDAO
+                .countBookingsByFacilityThisMonth();
     }
 }
