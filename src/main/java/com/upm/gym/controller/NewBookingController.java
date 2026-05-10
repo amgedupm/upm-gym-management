@@ -74,6 +74,31 @@ public class NewBookingController {
         this.loggedInUser = user;
     }
 
+    /**
+     * Called when the user clicks a free slot on the Booking Calendar.
+     * Pre-fills the form with the chosen facility, date, and start hour.
+     * End time defaults to start + 1 hour.
+     */
+    public void prefillFromCalendar(String facility, LocalDate date, LocalTime startTime) {
+        if (facility != null) {
+            facilityChoice.setValue(facility);
+        }
+        if (date != null) {
+            datePicker.setValue(date);
+        }
+        if (startTime != null) {
+            startHourSpinner.getValueFactory().setValue(startTime.getHour());
+            startMinuteSpinner.getValueFactory().setValue(startTime.getMinute());
+
+            // Default end = start + 1 hour
+            int endHour = Math.min(startTime.getHour() + 1, 23);
+            endHourSpinner.getValueFactory().setValue(endHour);
+            endMinuteSpinner.getValueFactory().setValue(startTime.getMinute());
+        }
+
+        updateSummary();
+    }
+
     private void updateSummary() {
         String facility = facilityChoice.getValue();
         LocalDate date = datePicker.getValue();

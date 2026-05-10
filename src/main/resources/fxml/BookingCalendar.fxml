@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.upm.gym.controller.BookingCalendarController"
+            prefWidth="950"
+            prefHeight="700">
+
+    <top>
+        <VBox>
+            <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2c3e50;">
+                <padding>
+                    <Insets top="15" right="20" bottom="15" left="20"/>
+                </padding>
+                <Label text="Booking Calendar"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="15"
+                  style="-fx-background-color: #ecf0f1;">
+                <padding>
+                    <Insets top="12" right="20" bottom="12" left="20"/>
+                </padding>
+
+                <Label text="Facility:" style="-fx-font-weight: bold;"/>
+                <ChoiceBox fx:id="facilityChoice" prefWidth="200"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="◀ Prev Week" onAction="#handlePrevWeek" prefWidth="110"/>
+                <Button text="Today" onAction="#handleToday" prefWidth="80"/>
+                <Button text="Next Week ▶" onAction="#handleNextWeek" prefWidth="110"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="weekRangeLabel"
+                       style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="20"
+                  style="-fx-background-color: #f8f9fa; -fx-border-color: #ddd transparent #ddd transparent; -fx-border-width: 1 0 1 0;">
+                <padding>
+                    <Insets top="8" right="20" bottom="8" left="20"/>
+                </padding>
+
+                <Label text="Legend:"
+                       style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #555;"/>
+
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Region prefWidth="14" prefHeight="14"
+                            style="-fx-background-color: #27ae60; -fx-background-radius: 3;"/>
+                    <Label text="Free (click to book)" style="-fx-font-size: 11px;"/>
+                </HBox>
+
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Region prefWidth="14" prefHeight="14"
+                            style="-fx-background-color: #f39c12; -fx-background-radius: 3;"/>
+                    <Label text="Pending" style="-fx-font-size: 11px;"/>
+                </HBox>
+
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Region prefWidth="14" prefHeight="14"
+                            style="-fx-background-color: #c0392b; -fx-background-radius: 3;"/>
+                    <Label text="Approved (booked)" style="-fx-font-size: 11px;"/>
+                </HBox>
+
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Region prefWidth="14" prefHeight="14"
+                            style="-fx-background-color: #bdc3c7; -fx-background-radius: 3;"/>
+                    <Label text="Past" style="-fx-font-size: 11px;"/>
+                </HBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true"
+                    style="-fx-background: white; -fx-background-color: white;">
+            <GridPane fx:id="calendarGrid" hgap="2" vgap="2">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+            </GridPane>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+            <Button text="Back to Dashboard"
+                    onAction="#handleBack"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
