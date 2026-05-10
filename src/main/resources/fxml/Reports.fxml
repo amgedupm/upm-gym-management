@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
@@ -88,15 +85,11 @@
             <Label text="Bookings by Facility (This Month)"
                    style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-            <BarChart fx:id="facilityChart" prefHeight="280" legendVisible="false">
-                <xAxis>
-                    <CategoryAxis fx:id="xAxis" label="Facility"/>
-                </xAxis>
-                <yAxis>
-                    <NumberAxis fx:id="yAxis" label="Number of Bookings"/>
-                </yAxis>
-            </BarChart>
-        </VBox>
+            <HBox fx:id="facilityCardsBox" spacing="20">
+                <padding>
+                    <Insets top="5" right="5" bottom="5" left="5"/>
+                </padding>
+            </HBox>        </VBox>
     </center>
 
     <bottom>

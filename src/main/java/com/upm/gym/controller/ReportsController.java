@@ -4,18 +4,15 @@ import com.upm.gym.model.User;
 import com.upm.gym.service.BookingService;
 import com.upm.gym.service.MembershipService;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -29,9 +26,7 @@ public class ReportsController {
     @FXML private Label activeMembershipsLabel;
     @FXML private Label bookingsTodayLabel;
     @FXML private Label pendingRequestsLabel;
-    @FXML private BarChart<String, Number> facilityChart;
-    @FXML private CategoryAxis xAxis;
-    @FXML private NumberAxis yAxis;
+    @FXML private HBox facilityCardsBox;
 
     private final MembershipService membershipService = new MembershipService();
     private final BookingService bookingService = new BookingService();
@@ -56,7 +51,6 @@ public class ReportsController {
             bookingsTodayLabel.setText(String.valueOf(bookingService.countBookingsToday()));
             pendingRequestsLabel.setText(String.valueOf(bookingService.countPendingBookings()));
         } catch (Exception e) {
-            // If anything fails, show "?" instead of crashing
             totalMembersLabel.setText("?");
             activeMembershipsLabel.setText("?");
             bookingsTodayLabel.setText("?");
@@ -69,15 +63,32 @@ public class ReportsController {
         try {
             Map<String, Integer> data = bookingService.countBookingsByFacilityThisMonth();
 
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            series.setName("Bookings");
+            String[] colors = {"#16a085", "#d35400", "#8e44ad", "#2980b9"};
+            int colorIndex = 0;
 
             for (Map.Entry<String, Integer> entry : data.entrySet()) {
-                series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
-            }
+                VBox card = new VBox(8);
+                card.setAlignment(javafx.geometry.Pos.CENTER);
+                card.setPrefHeight(100);
+                card.setPrefWidth(180);
+                card.setStyle(
+                        "-fx-background-color: " + colors[colorIndex % colors.length] + ";" +
+                                " -fx-background-radius: 8;" +
+                                " -fx-padding: 15;");
 
-            facilityChart.setData(FXCollections.observableArrayList(series));
-            facilityChart.setAnimated(false);
+                Label nameLabel = new Label(entry.getKey().toUpperCase());
+                nameLabel.setStyle(
+                        "-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+                Label countLabel = new Label(String.valueOf(entry.getValue()));
+                countLabel.setStyle(
+                        "-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+                card.getChildren().addAll(nameLabel, countLabel);
+                facilityCardsBox.getChildren().add(card);
+
+                colorIndex++;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
