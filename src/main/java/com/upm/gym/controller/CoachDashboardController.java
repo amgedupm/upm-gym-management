@@ -41,8 +41,20 @@ public class CoachDashboardController {
     }
 
     @FXML
-    private void handleApprovedBookings() {
-        System.out.println("TODO: open Approved Bookings screen");
+    private void handleApprovedBookings(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ApprovedBookings.fxml"));
+            Parent root = loader.load();
+
+            ApprovedBookingsController controller = loader.getController();
+            controller.setUser(loggedInUser);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Approved Bookings");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
