@@ -58,8 +58,20 @@ public class CoachDashboardController {
     }
 
     @FXML
-    private void handleMemberLookup() {
-        System.out.println("TODO: open Member Lookup screen");
+    private void handleMemberLookup(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MemberLookup.fxml"));
+            Parent root = loader.load();
+
+            MemberLookupController controller = loader.getController();
+            controller.setUser(loggedInUser);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Member Lookup");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
