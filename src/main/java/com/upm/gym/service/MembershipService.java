@@ -2,6 +2,7 @@ package com.upm.gym.service;
 
 import com.upm.gym.dao.MembershipDAO;
 import com.upm.gym.model.Membership;
+import com.upm.gym.exception.DatabaseException;
 
 import java.time.LocalDate;
 
@@ -68,14 +69,14 @@ public class MembershipService {
     /**
      * Retrieves the user's active membership.
      */
-    public Membership getActiveMembership(
-            String userId) {
+    public Membership getActiveMembership(String userId) {
 
-        return membershipDAO
-                .getActiveMembershipByUserId(
-                        userId
-                );
-    }
+    return membershipDAO
+            .getActiveMembershipByUserId(userId)
+            .orElseThrow(() ->
+                    new DatabaseException("No active membership found for user: " + userId)
+            );
+}
 
     /**
      * Cancels a membership.
@@ -110,8 +111,10 @@ public class MembershipService {
      * Real version will integrate with payment processor (or mark as paid in DB).
      */
     public boolean processPayment(String userId, double amount, String last4) {
-        System.out.println("[STUB] Payment processed: user=" + userId +
-                ", amount=SAR " + amount + ", card ending in " + last4);
-        return true;
+    return membershipDAO.processPayment(
+            userId,
+            amount,
+            last4
+        );
     }
 }

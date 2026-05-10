@@ -4,6 +4,7 @@ import com.upm.gym.exception.DatabaseException;
 import com.upm.gym.model.Membership;
 import com.upm.gym.util.DBConnection;
 
+import java.util.Optional;
 import java.sql.*;
 
 public class MembershipDAO {
@@ -49,8 +50,7 @@ public class MembershipDAO {
             );
         }
     }
-    public Membership getActiveMembershipByUserId(
-        String userId) {
+    public Optional<Membership> getActiveMembershipByUserId(String userId) {
 
     String sql =
             "SELECT * FROM memberships " +
@@ -60,39 +60,30 @@ public class MembershipDAO {
             "ORDER BY expiry_date DESC " +
             "LIMIT 1";
 
-    try (Connection conn =
-                 DBConnection.getConnection();
-
-         PreparedStatement stmt =
-                 conn.prepareStatement(sql)) {
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
         stmt.setString(1, userId);
 
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
-
-            return new Membership(
+            return Optional.of(new Membership(
                     rs.getInt("membership_id"),
                     rs.getString("user_id"),
                     rs.getString("membership_type"),
-                    rs.getDate("start_date")
-                            .toLocalDate(),
-                    rs.getDate("expiry_date")
-                            .toLocalDate(),
+                    rs.getDate("start_date").toLocalDate(),
+                    rs.getDate("expiry_date").toLocalDate(),
                     rs.getBoolean("auto_renew")
-            );
+            ));
         }
 
     } catch (SQLException e) {
-
-        throw new DatabaseException(
-                "Failed to retrieve membership."
-        );
+        throw new DatabaseException("Failed to retrieve membership.");
     }
 
-    return null;
-    }
+    return Optional.empty();
+}
     public boolean cancelMembership(
         int membershipId) {
 
@@ -177,5 +168,34 @@ public class MembershipDAO {
     }
 
     return 0;
+    }
+    public boolean processPayment(
+        String userId,
+        double amount,
+        String last4) {
+
+    String sql =
+            "INSERT INTO payments " +
+            "(user_id, amount, card_last4) " +
+            "VALUES (?, ?, ?)";
+
+    try (Connection conn =
+                 DBConnection.getConnection();
+
+         PreparedStatement stmt =
+                 conn.prepareStatement(sql)) {
+
+        stmt.setString(1, userId);
+        stmt.setDouble(2, amount);
+        stmt.setString(3, last4);
+
+        return stmt.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+
+        throw new DatabaseException(
+                "Payment processing failed."
+        );
+    }
     }
 }

@@ -402,40 +402,73 @@ countBookingsByFacilityThisMonth() {
 
     return map;
     }
-    private Booking mapBooking(
-        ResultSet rs)
-        throws SQLException {
+    private Booking mapBooking(ResultSet rs) {
+    try {
+        Booking booking = new Booking();
 
-    Booking booking =
-            new Booking();
+        booking.setBookingId(rs.getInt("booking_id"));
+        booking.setUserId(rs.getString("user_id"));
+        booking.setFacilityName(rs.getString("facility_name"));
+        booking.setBookingDate(rs.getDate("booking_date").toLocalDate());
+        booking.setStartTime(rs.getTime("start_time").toLocalTime());
+        booking.setEndTime(rs.getTime("end_time").toLocalTime());
+        booking.setStatus(BookingStatus.valueOf(rs.getString("status")));
 
-    booking.setBookingId(
-            rs.getInt("booking_id"));
+        return booking;
 
-    booking.setUserId(
-            rs.getString("user_id"));
-
-    booking.setFacilityName(
-            rs.getString(
-                    "facility_name"));
-
-    booking.setBookingDate(
-            rs.getDate("booking_date")
-                    .toLocalDate());
-
-    booking.setStartTime(
-            rs.getTime("start_time")
-                    .toLocalTime());
-
-    booking.setEndTime(
-            rs.getTime("end_time")
-                    .toLocalTime());
-
-    booking.setStatus(
-            BookingStatus.valueOf(
-                    rs.getString("status"))
-    );
-
-    return booking;
+    } catch (SQLException e) {
+        throw new DatabaseException("Failed to map Booking from ResultSet", e);
     }
+}
+    public List<Booking>
+getBookingsForFacilityInRange(
+        String facility,
+        LocalDate from,
+        LocalDate to) {
+
+    List<Booking> bookings =
+            new ArrayList<>();
+
+    String sql =
+            "SELECT * FROM bookings " +
+            "WHERE facility_name = ? " +
+            "AND booking_date BETWEEN ? AND ?";
+
+    try (Connection conn =
+                 DBConnection.getConnection();
+
+         PreparedStatement stmt =
+                 conn.prepareStatement(sql)) {
+
+        stmt.setString(1, facility);
+
+        stmt.setDate(
+                2,
+                Date.valueOf(from)
+        );
+
+        stmt.setDate(
+                3,
+                Date.valueOf(to)
+        );
+
+        ResultSet rs =
+                stmt.executeQuery();
+
+        while (rs.next()) {
+
+            bookings.add(
+                    mapBooking(rs)
+            );
+        }
+
+    } catch (SQLException e) {
+
+        throw new DatabaseException(
+                "Failed to retrieve bookings."
+        );
+    }
+
+    return bookings;
+}
 }
