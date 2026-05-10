@@ -16,6 +16,7 @@ CREATE TABLE memberships (
     start_date DATE NOT NULL,
     expiry_date DATE NOT NULL,
     auto_renew BOOLEAN DEFAULT FALSE,
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
 
     FOREIGN KEY (user_id)
         REFERENCES users(user_id)
