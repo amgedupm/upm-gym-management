@@ -107,9 +107,23 @@ public class PaymentController {
     }
 
     private void openReceipt(ActionEvent event, String last4) {
-        // TODO: open Receipt screen once it's built. For now, return to dashboard.
-        System.out.println("[TODO] Receipt screen not yet built. Card last4: " + last4);
-        goBackToDashboard(event);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Receipt.fxml"));
+            Parent root = loader.load();
+
+            ReceiptController controller = loader.getController();
+            controller.setUser(loggedInUser);
+            controller.setReceiptData(pendingMembership, amount, last4);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("UPM Gym - Receipt");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Fallback to dashboard if receipt fails to load
+            goBackToDashboard(event);
+        }
     }
 
     @FXML
