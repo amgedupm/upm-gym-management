@@ -161,4 +161,18 @@ public class BookingService {
         fake.add(b3);
         return fake;
     }
+    /**
+     * STUB — returns this user's approved bookings for today.
+     * Real version will query BookingDAO.getApprovedBookingsByUserAndDate(userId, LocalDate.now()).
+     */
+    public java.util.List<com.upm.gym.model.Booking> getApprovedBookingsForUserToday(String userId) {
+        java.util.List<com.upm.gym.model.Booking> all = getApprovedBookingsForToday();
+        java.util.List<com.upm.gym.model.Booking> filtered = new java.util.ArrayList<>();
+        for (com.upm.gym.model.Booking b : all) {
+            if (b.getUserId().equals(userId)) {
+                filtered.add(b);
+            }
+        }
+        return filtered;
+    }
 }
