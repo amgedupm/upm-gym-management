@@ -41,7 +41,7 @@ A multi-role desktop application that:
 | Ahmed Hakimi | 4320010 | Backend Lead                           |
 | Amged Elhag | 4411651 | Frontend Lead, Testing & Documentation |
 
-**Instructor:** Dr. Osama Qaeed
+**Instructor:** Dr. Osama Qaed
 
 ---
 
@@ -51,8 +51,8 @@ A multi-role desktop application that:
 |---|---|
 | Language | Java 23 |
 | GUI Framework | JavaFX 23.0.2 |
-| Database | MySQL 8.0 |
-| DB Access | JDBC (mysql-connector-j 9.1.0) |
+| Database | MySQL 9.7 |
+| DB Access | JDBC (mysql-connector-j 9.7.0) |
 | Build Tool | Maven 3.8+ |
 | Testing | JUnit 5.11 |
 | QR Generation | ZXing 3.5.3 |
